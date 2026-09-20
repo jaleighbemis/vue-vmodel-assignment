@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue v-model Component</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Custom v-model Component</h1>
+
+        <custom-input v-model="message"></custom-input>
+
+        <p>Current Value: {{ message }}</p>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    message: ''
+                }
+            }
+        });
+
+        app.component('custom-input', {
+            props: ['modelValue'],
+
+            emits: ['update:modelValue'],
+
+            template: `
+                <div>
+                    <label>Enter a value:</label>
+                    <input
+                        type="text"
+                        :value="modelValue"
+                        @input="$emit('update:modelValue', $event.target.value)"
+                    >
+                </div>
+            `
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
